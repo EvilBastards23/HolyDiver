@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8suoca54ubpq"]
+
+[ext_resource type="PackedScene" uid="uid://cnh1chs7y741p" path="res://core/player/player.tscn" id="1_mdl8m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mdl8m"]
+albedo_color = Color(0.658911, 1.22733e-06, 9.62615e-08, 1)
+
+[node name="core" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 18.8111, 0)
+layers = 3
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.8557, -0.260986, 2.18309)
+material_override = SubResource("StandardMaterial3D_mdl8m")
+use_collision = true
+size = Vector3(107.603, 0.478027, 100.062)
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_mdl8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42154, 3.27767, -2.07724)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82419, 4.94698, 5.04204)
+cast_shadow = 0
+use_collision = true
+size = Vector3(6.45898, 9.84473, 17.6402)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.0135, 4.94698, 5.04204)
+cast_shadow = 0
+use_collision = true
+size = Vector3(6.45898, 9.84473, 17.6402)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -31.2221, 4.94698, 39.0959)
+cast_shadow = 0
+use_collision = true
+size = Vector3(6.45898, 9.84473, 17.6402)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.44756, 4.94698, 39.0959)
+cast_shadow = 0
+use_collision = true
+size = Vector3(6.45898, 9.84473, 17.6402)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 21.9258, 4.94698, 39.0959)
+cast_shadow = 0
+use_collision = true
+size = Vector3(6.45898, 9.84473, 17.6402)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 22.1161, 4.94698, 38.9297)
+cast_shadow = 0
+use_collision = true
+size = Vector3(6.45898, 9.84473, 17.6402)
