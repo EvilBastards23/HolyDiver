@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cnh1chs7y741p"]
+[gd_scene load_steps=9 format=3 uid="uid://cnh1chs7y741p"]
 
-[ext_resource type="Script" uid="uid://dcyahftnfy375" path="res://core/player/player.gd" id="1_bq184"]
+[ext_resource type="Script" uid="uid://r3nppyvtgnd3" path="res://core/player/player_with_slide.gd" id="1_qjudb"]
 [ext_resource type="Script" uid="uid://b4p66adudfq1w" path="res://core/player/head.gd" id="2_h46vi"]
 [ext_resource type="Shader" uid="uid://dyydxfmoa1x8a" path="res://core/player/player.gdshader" id="3_ll17t"]
 [ext_resource type="Texture2D" uid="uid://mxgc3s1pvhyb" path="res://images.jpg" id="4_qjudb"]
@@ -21,9 +21,23 @@ shader_parameter/mask_size = 0.021
 shader_parameter/mask_edge = 0.41
 shader_parameter/animation_speed = 11.247
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xttum"]
+shader = ExtResource("3_ll17t")
+shader_parameter/noise = ExtResource("4_qjudb")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_count = 2.0
+shader_parameter/line_density = 0.31
+shader_parameter/line_faloff = 0.407
+shader_parameter/mask_size = 0.021
+shader_parameter/mask_edge = 0.41
+shader_parameter/animation_speed = 4.843
+
 [node name="CharacterBody3D" type="CharacterBody3D"]
 wall_min_slide_angle = 1.5708
-script = ExtResource("1_bq184")
+script = ExtResource("1_qjudb")
+slide_speed = 20.0
+slide_fov_change = 90.0
+slide_camera_lower = 0.8
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 cast_shadow = 0
@@ -67,6 +81,15 @@ cull_mask = 1047554
 [node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/Camera3D"]
 visible = false
 material = SubResource("ShaderMaterial_qjudb")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="SubViewportContainer/SubViewport/Camera3D"]
+visible = false
+material = SubResource("ShaderMaterial_xttum")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
