@@ -37,13 +37,21 @@ var slide_collision_height: float = 0.5
 # Camera tilting for slide and movement
 var camera_tilt: float = 0.0
 @export var slide_tilt_angle: float = 5.0
-@export var movement_tilt_angle: float = 2.0  # New: tilt angle for left/right movement
+@export var movement_tilt_angle: float = 2.0
 var camera_crouch_offset: float = 0.0
 @export var slide_camera_lower: float = 0.5
 
+# Wall sliding and unstuck mechanics
+@export var wall_slide_enabled: bool = true
+@export var wall_slide_speed: float = 0.8  # How much speed is maintained when sliding along walls
+@export var unstuck_force: float = 2.0     # Force applied to push away from walls
+@export var wall_detection_distance: float = 0.6  # How far to check for walls
+var last_wall_normal: Vector3 = Vector3.ZERO
+var stuck_timer: float = 0.0
+var was_stuck: bool = false
+
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	# Store original collision shape height
 	setup_collision_shape()
 
 # Rotating camera using mouse
@@ -60,7 +68,7 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 	
 	# Jump (can't jump while sliding)
-	if is_on_floor() and not is_jumping  and Input.is_action_pressed("jump"):
+	if is_on_floor() and not is_jumping and Input.is_action_pressed("jump"):
 		if is_sliding:
 			end_slide()
 		velocity.y = JUMP_VELOCITY
@@ -105,8 +113,11 @@ func _physics_process(delta):
 	elif not is_dashing:
 		camera_3d.fov = lerp(camera_3d.fov, 75.0, 0.1)
 		if direction:
-			velocity.x = direction.x * speed
-			velocity.z = direction.z * speed
+			# Apply wall sliding logic
+			var intended_velocity = direction * speed
+			intended_velocity = handle_wall_sliding(intended_velocity, delta)
+			velocity.x = intended_velocity.x
+			velocity.z = intended_velocity.z
 		else:
 			velocity.x = move_toward(velocity.x, 0, speed)
 			velocity.z = move_toward(velocity.z, 0, speed)
@@ -122,6 +133,62 @@ func _physics_process(delta):
 		camera_3d.transform.origin = head_bob(t_bob, velocity.length(), speed)
 	
 	move_and_slide()
+
+func handle_wall_sliding(intended_velocity: Vector3, delta: float) -> Vector3:
+	if not wall_slide_enabled:
+		return intended_velocity
+	
+	# Check if we're colliding with walls
+	var wall_normal = Vector3.ZERO
+	var is_hitting_wall = false
+	
+	# Use raycast to detect walls in movement direction
+	var space_state = get_world_3d().direct_space_state
+	var from = global_position
+	var to = global_position + intended_velocity.normalized() * wall_detection_distance
+	
+	var query = PhysicsRayQueryParameters3D.create(from, to)
+	query.exclude = [self]  # Don't hit ourselves
+	query.collision_mask = 1  # Adjust collision mask as needed
+	
+	var result = space_state.intersect_ray(query)
+	
+	if result:
+		wall_normal = result.normal
+		is_hitting_wall = true
+		last_wall_normal = wall_normal
+	
+	# Check for stuck condition (very low movement despite input)
+	var current_speed = Vector3(velocity.x, 0, velocity.z).length()
+	var intended_speed = intended_velocity.length()
+	
+	if intended_speed > 1.0 and current_speed < 0.5:
+		stuck_timer += delta
+		if stuck_timer > 0.1:  # Stuck for more than 0.1 seconds
+			was_stuck = true
+	else:
+		stuck_timer = 0.0
+		was_stuck = false
+	
+	# Apply wall sliding or unstuck logic
+	if is_hitting_wall or was_stuck:
+		if is_hitting_wall:
+			# Slide along the wall
+			var slide_velocity = intended_velocity - intended_velocity.project(wall_normal)
+			slide_velocity *= wall_slide_speed
+			
+			# Add small push away from wall to prevent sticking
+			var push_away = wall_normal * unstuck_force * delta
+			slide_velocity += push_away
+			
+			return slide_velocity
+		elif was_stuck and last_wall_normal != Vector3.ZERO:
+			# Try to unstuck by moving away from last known wall
+			var unstuck_velocity = intended_velocity
+			unstuck_velocity += last_wall_normal * unstuck_force
+			return unstuck_velocity
+	
+	return intended_velocity
 
 func setup_collision_shape():
 	# Find and setup collision shape
@@ -140,7 +207,8 @@ func setup_collision_shape():
 		print("Warning: No CollisionShape3D found. Using default values.")
 
 func start_slide(direction: Vector3):
-	$SubViewportContainer/SubViewport/Camera3D/ColorRect2.show()
+	if has_node("SubViewportContainer/SubViewport/Camera3D/ColorRect2"):
+		$SubViewportContainer/SubViewport/Camera3D/ColorRect2.show()
 	is_sliding = true
 	slide_direction = direction.normalized()
 	slide_timer = 0.0
@@ -157,7 +225,8 @@ func start_slide(direction: Vector3):
 	camera_3d.fov = lerp(camera_3d.fov, slide_fov_change, 0.3)
 
 func end_slide():
-	$SubViewportContainer/SubViewport/Camera3D/ColorRect2.hide()
+	if has_node("SubViewportContainer/SubViewport/Camera3D/ColorRect2"):
+		$SubViewportContainer/SubViewport/Camera3D/ColorRect2.hide()
 	if not is_sliding:
 		return
 		
@@ -200,8 +269,6 @@ func update_camera_tilt(delta: float, input_dir: Vector2):
 		target_crouch = slide_camera_lower
 	else:
 		# Tilt camera based on left/right movement input
-		# Negative input_dir.x means moving left, positive means moving right
-		# We invert it so moving left tilts left (negative) and moving right tilts right (positive)
 		target_tilt = -input_dir.x * deg_to_rad(movement_tilt_angle)
 	
 	camera_tilt = lerp(camera_tilt, target_tilt, delta * 5.0)
