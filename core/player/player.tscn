@@ -35,15 +35,19 @@ shader_parameter/animation_speed = 4.843
 [node name="CharacterBody3D" type="CharacterBody3D"]
 wall_min_slide_angle = 1.5708
 script = ExtResource("1_qjudb")
+sensitivity = 0.001
 slide_speed = 20.0
+slide_duration = 1.0
 slide_fov_change = 90.0
 slide_camera_lower = 0.8
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_sh265")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.722281, 0, 0, 0, 0.960947, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_4flbx")
 
 [node name="head" type="Node3D" parent="."]
