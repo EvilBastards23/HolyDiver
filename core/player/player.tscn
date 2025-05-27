@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cnh1chs7y741p"]
+[gd_scene load_steps=10 format=3 uid="uid://cnh1chs7y741p"]
 
 [ext_resource type="Script" uid="uid://r3nppyvtgnd3" path="res://core/player/player_with_slide.gd" id="1_qjudb"]
 [ext_resource type="Script" uid="uid://b4p66adudfq1w" path="res://core/player/head.gd" id="2_h46vi"]
 [ext_resource type="Shader" uid="uid://dyydxfmoa1x8a" path="res://core/player/player.gdshader" id="3_ll17t"]
 [ext_resource type="Texture2D" uid="uid://mxgc3s1pvhyb" path="res://images.jpg" id="4_qjudb"]
+[ext_resource type="PackedScene" uid="uid://x4gham08s0k3" path="res://hand_with_deagleaaa.tscn" id="5_xttum"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
@@ -55,12 +56,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.408694, 0)
 cull_mask = 1048573
 fov = 108.9
 
-[node name="CSGBox3D" type="CSGBox3D" parent="head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.305926, -0.216122, -0.687467)
-layers = 2
-cast_shadow = 0
-size = Vector3(0.209961, 0.237427, 1)
-
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
@@ -95,3 +90,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="hand_with_deagleaaa" parent="SubViewportContainer/SubViewport/Camera3D" instance=ExtResource("5_xttum")]
+transform = Transform3D(-3.3, 0, -4.98286e-07, 0, 3.3, 0, 4.98286e-07, 0, -3.3, -0.100872, -2.51374, 0.638575)
