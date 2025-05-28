@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://8r0d75kj1s0q"]
+
+[ext_resource type="Script" uid="uid://c4goie46ei6tx" path="res://code/enemy.gd" id="1_7k104"]
+[ext_resource type="PackedScene" uid="uid://dhnbb0ggj7guq" path="res://models/testEnemyForHolyDiver.glb" id="2_4gyqm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7k104"]
+radius = 0.257171
+height = 1.75782
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_7k104")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="testEnemyForHolyDiver" parent="MeshInstance3D" instance=ExtResource("2_4gyqm")]
+transform = Transform3D(-0.999968, 0, 0.00804598, 0, 1, 0, -0.00804598, 0, -0.999968, 0, -0.922134, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0364237, 0)
+shape = SubResource("CapsuleShape3D_7k104")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

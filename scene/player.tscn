@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://cnh1chs7y741p"]
 
-[ext_resource type="Script" uid="uid://r3nppyvtgnd3" path="res://core/player/player_with_slide.gd" id="1_qjudb"]
-[ext_resource type="Script" uid="uid://b4p66adudfq1w" path="res://core/player/head.gd" id="2_h46vi"]
+[ext_resource type="Script" uid="uid://r3nppyvtgnd3" path="res://scene/player_with_slide.gd" id="1_qjudb"]
+[ext_resource type="Script" uid="uid://b4p66adudfq1w" path="res://code/head.gd" id="2_h46vi"]
 [ext_resource type="Shader" uid="uid://dyydxfmoa1x8a" path="res://core/player/player.gdshader" id="3_ll17t"]
 [ext_resource type="Texture2D" uid="uid://mxgc3s1pvhyb" path="res://images.jpg" id="4_qjudb"]
-[ext_resource type="PackedScene" uid="uid://x4gham08s0k3" path="res://hand_with_deagleaaa.tscn" id="5_xttum"]
+[ext_resource type="PackedScene" uid="uid://x4gham08s0k3" path="res://scene/hand_with_deagleaaa.tscn" id="5_xttum"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
@@ -37,9 +37,11 @@ shader_parameter/animation_speed = 4.843
 wall_min_slide_angle = 1.5708
 script = ExtResource("1_qjudb")
 sensitivity = 0.001
+dash_distance = 8.0
 slide_speed = 20.0
 slide_duration = 1.0
 slide_fov_change = 90.0
+movement_tilt_angle = 4.0
 slide_camera_lower = 0.8
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -48,7 +50,7 @@ cast_shadow = 0
 mesh = SubResource("CapsuleMesh_sh265")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.722281, 0, 0, 0, 0.960947, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(0.722281, 0, 0, 0, 0.960947, 0, 0, 0, 1, 0, -0.541401, 0)
 shape = SubResource("ConvexPolygonShape3D_4flbx")
 
 [node name="head" type="Node3D" parent="."]
@@ -56,7 +58,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.347235, 0)
 script = ExtResource("2_h46vi")
 
 [node name="Camera3D" type="Camera3D" parent="head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.408694, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.132707, 0)
 cull_mask = 1048573
 fov = 108.9
 
@@ -74,7 +76,7 @@ size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.755696, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.214295, 0)
 cull_mask = 1047554
 
 [node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/Camera3D"]

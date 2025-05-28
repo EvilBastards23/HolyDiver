@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://x4gham08s0k3"]
 
-[ext_resource type="PackedScene" uid="uid://b0ptqj2347wpl" path="res://hand_with_deagleaaa.glb" id="1_ddjdj"]
+[ext_resource type="PackedScene" uid="uid://b0ptqj2347wpl" path="res://models/hand_with_deagleaaa.glb" id="1_ddjdj"]
 
 [node name="hand_with_deagleaaa" instance=ExtResource("1_ddjdj")]
 
