@@ -1,21 +1,9 @@
-<<<<<<< Updated upstream
 [gd_scene load_steps=9 format=3 uid="uid://cnh1chs7y741p"]
-=======
-[gd_scene load_steps=13 format=3 uid="uid://cnh1chs7y741p"]
->>>>>>> Stashed changes
 
 [ext_resource type="Script" uid="uid://r3nppyvtgnd3" path="res://core/player/player_with_slide.gd" id="1_qjudb"]
 [ext_resource type="Script" uid="uid://b4p66adudfq1w" path="res://core/player/head.gd" id="2_h46vi"]
 [ext_resource type="Shader" uid="uid://dyydxfmoa1x8a" path="res://core/player/player.gdshader" id="3_ll17t"]
-<<<<<<< Updated upstream
 [ext_resource type="Texture2D" uid="uid://mxgc3s1pvhyb" path="res://images.jpg" id="4_qjudb"]
-=======
-[ext_resource type="Script" uid="uid://b0inlf36id46b" path="res://code/recoil.gd" id="3_oh5ij"]
-[ext_resource type="Texture2D" uid="uid://mxgc3s1pvhyb" path="res://Texture/images.jpg" id="4_qjudb"]
-[ext_resource type="PackedScene" uid="uid://x4gham08s0k3" path="res://scene/hand_with_deagleaaa.tscn" id="5_xttum"]
-[ext_resource type="Script" uid="uid://b08jvnpone4p1" path="res://code/crosshair.gd" id="7_hp4bs"]
-[ext_resource type="Script" uid="uid://dk5fo25gtb70" path="res://code/BASE/BASE_STATE_MACHINE.gd" id="8_c8kf1"]
->>>>>>> Stashed changes
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
@@ -47,23 +35,6 @@ radius = 0.408343
 [node name="CharacterBody3D" type="CharacterBody3D"]
 floor_constant_speed = true
 script = ExtResource("1_qjudb")
-<<<<<<< Updated upstream
-=======
-dash_distance = 8.0
-double_jump_velocity = 10.0
-coyote_time = 0.1
-jump_buffer_time = 0.1
-wall_slide_gravity = 3.0
-wall_slide_max_speed = 20.0
-slide_speed = 25.0
-slide_friction = 1.0
-slide_duration = 0.8
-slide_fov_change = 90.0
-jump_shake_intensity = 0.01
-land_shake_intensity = 0.01
-air_time_threshold = 0.1
-wall_slide_tilt_angle = 10.0
->>>>>>> Stashed changes
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
@@ -74,7 +45,6 @@ mesh = SubResource("CapsuleMesh_sh265")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.347235, 0)
 script = ExtResource("2_h46vi")
 
-<<<<<<< Updated upstream
 [node name="Camera3D" type="Camera3D" parent="head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.408694, 0)
 cull_mask = 1048573
@@ -85,22 +55,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.305926, -0.216122, -0.68746
 layers = 2
 cast_shadow = 0
 size = Vector3(0.209961, 0.237427, 1)
-=======
-[node name="recoil" type="Node3D" parent="head"]
-script = ExtResource("3_oh5ij")
-recoil = Vector3(1, 1, 1)
-snappiness = 2.0
-returnSpeed = 20.0
-
-[node name="Camera3D" type="Camera3D" parent="head/recoil"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.132707, 0)
-cull_mask = 1048573
-fov = 108.9
-
-[node name="hand_with_deagleaaa" parent="head/recoil" node_paths=PackedStringArray("player") instance=ExtResource("5_xttum")]
-transform = Transform3D(-3.3, 0, -4.98286e-07, 0, 3.3, 0, 4.98286e-07, 0, -3.3, -0.100872, -2.64668, 0.638575)
-player = NodePath("../../..")
->>>>>>> Stashed changes
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -137,18 +91,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-<<<<<<< Updated upstream
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_qjudb")
-=======
-[node name="Control" type="Control" parent="." node_paths=PackedStringArray("camera")]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("7_hp4bs")
-camera = NodePath("../head/recoil/Camera3D")
-
-[node name="StateMachine" type="Node" parent="."]
-script = ExtResource("8_c8kf1")
->>>>>>> Stashed changes

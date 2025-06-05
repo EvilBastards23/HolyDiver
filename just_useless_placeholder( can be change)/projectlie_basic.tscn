@@ -1,6 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://4assp5h1nnmf"]
 
+<<<<<<< Updated upstream
 [ext_resource type="Script" uid="uid://c6h23t53fbc55" path="res://code/BASE/BASE_PROJECTILE.gd" id="1_up1k0"]
+=======
+[ext_resource type="Script" uid="uid://c6h23t53fbc55" path="res://core/player/BASE/BASE_PROJECTILE.gd" id="1_up1k0"]
+>>>>>>> Stashed changes
 [ext_resource type="Shader" uid="uid://d2mdyidypvk48" path="res://just_useless_placeholder( can be change)/projectile_basic.gdshader" id="1_xqrs5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xqrs5"]
