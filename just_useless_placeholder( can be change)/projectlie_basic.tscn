@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://4assp5h1nnmf"]
+
+[ext_resource type="Script" uid="uid://c6h23t53fbc55" path="res://code/BASE/BASE_PROJECTILE.gd" id="1_up1k0"]
+[ext_resource type="Shader" uid="uid://d2mdyidypvk48" path="res://just_useless_placeholder( can be change)/projectile_basic.gdshader" id="1_xqrs5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xqrs5"]
+render_priority = 0
+shader = ExtResource("1_xqrs5")
+shader_parameter/speed = 2.0
+shader_parameter/glow_intensity = 2.0
+shader_parameter/bullet_color = Color(1, 0.8, 0.2, 1)
+shader_parameter/glow_color = Color(1, 0.4, 0, 1)
+shader_parameter/trail_length = 0.8
+shader_parameter/bullet_width = 0.3
+shader_parameter/enable_sparkle = true
+shader_parameter/sparkle_intensity = 1.0
+shader_parameter/billboard = false
+
+[sub_resource type="BoxMesh" id="BoxMesh_x4mym"]
+lightmap_size_hint = Vector2i(14, 21)
+material = SubResource("ShaderMaterial_xqrs5")
+
+[node name="projectlie_basic" type="CharacterBody3D"]
+script = ExtResource("1_up1k0")
+projectile_speed = 100.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-6.07151e-08, 0, 0.132327, 0, 0.13534, 0, -1.389, 0, -5.7842e-09, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_x4mym")
