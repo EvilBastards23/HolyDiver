@@ -13,5 +13,5 @@ func _ready() -> void:
 	# Set SubViewport size
 	sub_viewport.size = screen_size
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	camera_3dd.global_transform = camera_3d.global_transform

@@ -1,8 +1,56 @@
-[gd_scene load_steps=2 format=3 uid="uid://x4gham08s0k3"]
+[gd_scene load_steps=11 format=3 uid="uid://x4gham08s0k3"]
 
 [ext_resource type="PackedScene" uid="uid://b0ptqj2347wpl" path="res://models/hand_with_deagleaaa.glb" id="1_ddjdj"]
+[ext_resource type="Script" uid="uid://cmg0nkvn6c7x7" path="res://core/player/BASE/BASE_GUN.gd" id="2_ckax4"]
+[ext_resource type="PackedScene" uid="uid://4assp5h1nnmf" path="res://just_useless_placeholder( can be change)/projectlie_basic.tscn" id="3_5g3rs"]
 
-[node name="hand_with_deagleaaa" instance=ExtResource("1_ddjdj")]
+[sub_resource type="Curve" id="Curve_ckax4"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0.0441177, -303.371), 0.0, 0.0, 0, 0, Vector2(1, -360), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5g3rs"]
+curve = SubResource("Curve_ckax4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mhops"]
+angle_min = -73.0
+angle_max = 73.0
+angle_curve = SubResource("CurveTexture_5g3rs")
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_8gck6"]
+colors = PackedColorArray(1, 1, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jf8rp"]
+gradient = SubResource("Gradient_8gck6")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6rch2"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(1, 1, 0, 1)
+albedo_texture = SubResource("GradientTexture2D_jf8rp")
+emission_enabled = true
+emission = Color(1, 0.52549, 0, 1)
+emission_energy_multiplier = 16.0
+emission_texture = SubResource("GradientTexture2D_jf8rp")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_jku84"]
+material = SubResource("StandardMaterial3D_6rch2")
+size = Vector2(0.2, 0.2)
+
+[node name="hand_with_deagleaaa" node_paths=PackedStringArray("muzzle_flash", "gun_barrel") instance=ExtResource("1_ddjdj")]
+script = ExtResource("2_ckax4")
+projectile_scene = ExtResource("3_5g3rs")
+muzzle_flash = NodePath("muzzle_flash")
+gun_barrel = NodePath("gun_barrel")
 
 [node name="Skeleton3D" parent="metarig" index="0"]
 bones/2/position = Vector3(0.0631635, 0.106737, -0.0294665)
@@ -59,3 +107,18 @@ layers = 2
 
 [node name="Grip_low_001" parent="." index="1"]
 layers = 2
+
+[node name="gun_barrel" type="Node3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0780326, 0.74688, 0.840913)
+
+[node name="muzzle_flash" type="GPUParticles3D" parent="." index="4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.0861464, 0.73915, 0.854018)
+emitting = false
+amount = 16
+lifetime = 0.01
+one_shot = true
+explosiveness = 0.92
+randomness = 0.74
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_mhops")
+draw_pass_1 = SubResource("QuadMesh_jku84")
